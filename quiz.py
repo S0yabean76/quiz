@@ -6,9 +6,6 @@ def get_questions():
             lines = f.readlines()
     return [(lines[i], lines[i+1].strip()) for i in range(0, len(lines), 2)]
 
-
-
-
 try:
     questions = get_questions()
 except IOError:
@@ -20,8 +17,14 @@ except IndexError:
 
 score = 0
 total = len(questions)
+attempts = 3
 for question, answer in questions:
     guess = raw_input(question)
     if guess == answer:
         score+= 1
+        #need to add loop for attempts
+    elif (guess != answer) & (attempts != 0):
+        attempts -= 1
+        print 'you have %s more attempts' %attempts
+
 print 'You got %s out of %s questions right' %(score, total)
