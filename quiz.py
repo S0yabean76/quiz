@@ -18,13 +18,16 @@ except IndexError:
 score = 0
 total = len(questions)
 attempts = 3
+guess = ''
 for question, answer in questions:
-    guess = raw_input(question)
-    if guess == answer:
-        score+= 1
-        #need to add loop for attempts
-    elif (guess != answer) & (attempts != 0):
-        attempts -= 1
-        print 'you have %s more attempts' %attempts
+    while (attempts != 0) and guess != answer:
+        guess = raw_input(question)
+        if guess == answer:
+            score+= 1
+            attempts = 3
+            #need to add loop for attempts
+        elif (guess != answer) & (attempts != 0):
+            attempts -= 1
+            print 'Incorrect. You have %s more attempts' %attempts
 
 print 'You got %s out of %s questions right' %(score, total)
