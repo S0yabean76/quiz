@@ -36,7 +36,7 @@ for question, answer in questions:
                     if guess[i] != answer[i]:
                         mistakes += 1
             except:
-                #refine so that the number of missing digits is the same as mistakes - TO DO
+                #refine so that mistakes is the same as the number of missing digits - TO DO
                 mistakes = 3
                 print "Your answer is too short."
             if mistakes <= 2:
