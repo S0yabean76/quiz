@@ -20,32 +20,37 @@ total = len(questions)
 attempts = 3
 guess = ''
 for question, answer in questions:
-    #check that the user still has guesses left and the answer was wrong
+    #check that the user still has guesses left and guess does not equal answer
     while (attempts != 0) and guess != answer:
         guess = raw_input(question).lower()
         #if guess is correct add one to the score and reset the number of guesses
         if guess == answer:
             score+= 1
             attempts = 3
-        #if the guess is wrong reduce the number of attempts and show prompt
         elif guess != answer:
-            #check whether the answer is close enough
+            #count the number of mistakes
             mistakes = 0
             try:
                 for i in range(len(answer)):
                     if guess[i] != answer[i]:
                         mistakes += 1
-            except:
-                #refine so that mistakes is the same as the number of missing digits - TO DO
-                mistakes = 3
-                print "Your answer is too short."
+            except IndexError:
+                #when guess is shorter than answer add spaces to the end then check again
+                howShort = len(answer[len(guess):])
+                guess = guess + ("_" * howShort)
+                for i in range(len(answer)):
+                    if guess[i] != answer[i]:
+                        mistakes += 1
+                print "I'm looking for a %s-letter word." % len(answer)
+            #if there are 2 or fewer mistakes then it will pass
             if mistakes <= 2:
                 score += 1
                 attempts = 3
-                print "That's close enough"
+                print "I guess that's close enough :-)"
                 break
+            # if the guess is wrong reduce the number of attempts and show prompt
             elif mistakes > 2:
                 attempts -= 1
-                print "Don't give up! You have %s more attempts" % attempts
+                print "You have %s more attempts" % attempts
 
 print 'You got %s out of %s questions right' %(score, total)
